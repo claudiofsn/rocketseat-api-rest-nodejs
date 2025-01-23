@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 import { knex } from './database'
+import { env } from './env'
 
 const server = fastify()
 
@@ -15,7 +16,7 @@ server.get('/hello', async () => {
 
 server
   .listen({
-    port: 3333,
+    port: env.PORT,
   })
   .then(() => {
     console.log('HTPP Server Running!')
