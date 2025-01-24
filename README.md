@@ -3,7 +3,7 @@ Aplicação de controle de finanças pessoais
 # RF
 
 - [x] O usuário deve poder criar uma nova transação;
-- [] O usuário deve poder obter um resumo da sua transação;
+- [x] O usuário deve poder obter um resumo da sua transação;
 - [x] O usuário deve poder listar todas transações que já ocorreram;
 - [x] O usuário deve poder visualizar uma transação única;
 
