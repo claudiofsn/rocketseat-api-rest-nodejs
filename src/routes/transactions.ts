@@ -23,9 +23,11 @@ export async function transactionsRoutes(app: FastifyInstance) {
   })
 
   app.get('/summary', async () => {
-    const summary = await knex('transactions').sum('amount', {as:'amount'}).first()
+    const summary = await knex('transactions')
+      .sum('amount', { as: 'amount' })
+      .first()
 
-    return {summary}
+    return { summary }
   })
 
   app.post('/', async (request, response) => {
@@ -38,10 +40,22 @@ export async function transactionsRoutes(app: FastifyInstance) {
     const { title, amount, type } = (request.body =
       createTransactionBodySchema.parse(request.body))
 
+    let sessionId = request.cookies.sessionId
+
+    if (!sessionId) {
+      sessionId = randomUUID()
+      response.cookie('sessionId', sessionId, {
+        path: '/',
+        maxAge: 1000 * 60 * 60 * 24 * 7, //days
+        
+      })
+    }
+
     await knex('transactions').insert({
       id: randomUUID(),
       title,
       amount: type === 'credit' ? amount : amount * -1,
+      session_id: sessionId,
     })
 
     return response.status(201).send()
