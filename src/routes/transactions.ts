@@ -29,7 +29,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
       session_id: sessionId
     }).first()
 
-    return transaction
+    return {transaction}
   })
 
   app.get('/summary', { preHandler: [checkSessionIdExists] }, async (request) => {
